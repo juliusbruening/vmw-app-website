@@ -63,22 +63,30 @@
   }
   header.site .inner{display:flex;align-items:center;gap:12px;min-height:60px}
   header.site .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:.2px}
-  header.site .mark{
+  header.site .logo-badge{
     display:inline-flex;align-items:center;justify-content:center;
-    width:30px;height:30px;border-radius:8px;background:#fff;color:var(--vmw-red);
-    font-weight:800;font-size:14px;letter-spacing:-.5px;
+    background:#fff;border-radius:8px;padding:3px 6px;
   }
+  header.site .logo-badge img{height:26px;width:auto;display:block}
   header.site .spacer{flex:1}
   header.site .btn{padding:9px 18px;font-size:14px}
 
-  /* ── Hero (bildfrei: Rot-Verlauf + dezente Lichtpunkte) ── */
+  /* ── Hero (bildfrei: tiefer Rot-Verlauf + Muster + Wellen-Kante) ── */
   .hero{position:relative;color:#fff;overflow:hidden;
     background:
-      radial-gradient(900px 500px at 80% -10%, rgba(255,255,255,.18), transparent 60%),
-      radial-gradient(700px 500px at 0% 110%, rgba(0,0,0,.25), transparent 55%),
-      linear-gradient(160deg, var(--vmw-red) 0%, var(--vmw-red-dark) 100%);
+      radial-gradient(1100px 620px at 86% -20%, rgba(255,255,255,.22), transparent 55%),
+      radial-gradient(820px 620px at -12% 118%, rgba(0,0,0,.38), transparent 55%),
+      linear-gradient(155deg, #A50D26 0%, var(--vmw-red) 46%, #7C0A1E 100%);
   }
-  .hero .inner{position:relative;z-index:2;padding:92px 20px 100px;max-width:var(--maxw);margin:0 auto}
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 2px, transparent 2px 24px);
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 80%);
+    mask-image:linear-gradient(180deg,#000 0%,transparent 80%);
+  }
+  .hero .inner{position:relative;z-index:3;padding:96px 20px 124px;max-width:var(--maxw);margin:0 auto}
+  .hero-wave{position:absolute;left:0;right:0;bottom:-1px;z-index:2;line-height:0;pointer-events:none}
+  .hero-wave svg{display:block;width:100%;height:64px}
   .hero .eyebrow{
     display:inline-block;font-size:13px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;
     background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
@@ -140,9 +148,13 @@
   .cta-final p{font-size:18px;margin:0 0 26px;color:rgba(255,255,255,.94)}
 
   /* ── Footer ── */
-  footer.site{background:#1A1A1A;color:rgba(255,255,255,.75);padding:32px 0;font-size:14px}
-  footer.site .inner{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between}
-  footer.site a{color:#fff;font-weight:600}
+  footer.site{background:#1A1A1A;color:rgba(255,255,255,.7);padding:34px 0;font-size:14px}
+  footer.site .foot{text-align:center}
+  footer.site .foot p{margin:6px 0}
+  footer.site .credit{color:rgba(255,255,255,.92);font-weight:600}
+  footer.site .legal{font-size:13px;color:rgba(255,255,255,.6)}
+  footer.site a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35)}
+  footer.site a:hover{text-decoration-color:#fff}
 
   /* ── Responsive ── */
   @media (max-width:880px){
@@ -162,7 +174,7 @@
 <header class="site">
   <div class="wrap inner">
     <a class="brand" href="#top">
-      <span class="mark">VMW</span>
+      <span class="logo-badge"><img src="https://vmw-berlin.de/wp-content/uploads/2022/06/vmw_flag_red.png?w=120" alt="VMW Berlin" /></span>
       <span>Live-App</span>
     </a>
     <div class="spacer"></div>
@@ -174,12 +186,17 @@
 <section class="hero" id="top">
   <div class="inner">
     <span class="eyebrow">VMW Live-App</span>
-    <h1>Alle Turniere des Vereins. An einem Ort.</h1>
-    <p class="sub">Spielpläne, Ergebnisse, Schiri-Einteilung und Einsatzbögen — Schluss mit verstreuten Links, Zetteln und Excel-Listen. Bei vielen Turnieren live, bei allen übersichtlich. Eine Seite, die jeder im Verein nutzen kann.</p>
+    <h1>Alle Turniere unseres Vereins an einem Ort.</h1>
+    <p class="sub">Spielpläne, Ergebnisse, Schiri-Einteilung und Einsatzbögen — Schluss mit verstreuten Links, Zetteln und Excel-Listen. Eine Seite für uns alle im VMW.</p>
     <div class="cta-row">
       <a class="btn btn-primary" data-app-link href="#">Zur App →</a>
       <a class="btn btn-ghost" href="#how">Wie funktioniert's?</a>
     </div>
+  </div>
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C240,8 480,8 720,28 C960,48 1200,64 1440,36 L1440,64 L0,64 Z" fill="#F0EBE0"></path>
+    </svg>
   </div>
 </section>
 
@@ -232,7 +249,7 @@
           <span class="pill" style="background:var(--pill-extern-bg);color:var(--pill-extern-ink)">Schiri</span>
           <h3>SCHIRIS</h3>
           <span class="title">Deine Einsätze, dein Bogen</span>
-          <p>Eigener Login mit persönlichem Code. Sieh deine komplette Einsatz-Historie, ergänze externe Turniere selbst — und lade deinen DKV-Einsatzbogen als fertiges PDF herunter. Kein Übertragen von Hand mehr.</p>
+          <p>Eigener Login mit persönlichem Code. Sieh deine komplette Einsatz-Historie, trag Einsätze bei anderen Turnieren selbst nach — und lade deinen DKV-Einsatzbogen als fertiges PDF herunter. Kein Übertragen von Hand mehr.</p>
         </div>
       </div>
 
@@ -298,16 +315,16 @@
         <p class="ans">Nein. Die App läuft im Browser. Auf dem Handy kannst du sie optional über „Zum Startbildschirm hinzufügen" wie eine echte App ablegen.</p>
       </details>
       <details>
-        <summary>Woher kommen die Spielpläne und Ergebnisse?</summary>
-        <p class="ans">Die Daten werden automatisch von der offiziellen Turnier-Plattform importiert und laufend aktualisiert — du musst nichts manuell pflegen.</p>
+        <summary>Aktualisieren sich die Ergebnisse von selbst?</summary>
+        <p class="ans">Bei Turnieren mit Spielplan auf kayakers.nl (die gängige Plattform) ja: Ergebnisse und Tabellen werden an Turniertagen alle paar Minuten automatisch geholt — niemand muss etwas von Hand eintragen. Bei Turnieren ohne solchen Spielplan ist der jeweilige Plan in der Übersicht verlinkt.</p>
       </details>
       <details>
         <summary>Wie bekomme ich meinen Schiri-Login?</summary>
         <p class="ans">Deinen persönlichen Login-Code bekommst du von der Vereinsorga. Damit kommst du an deine Einsatz-Historie und deinen DKV-Bogen.</p>
       </details>
       <details>
-        <summary>Was ist mit externen Turnieren (z.B. Bundesliga)?</summary>
-        <p class="ans">Auch die sind drin. Spielpläne gibt es dort nicht immer live, aber Ressourcen und Schiri-Einsätze lassen sich erfassen — damit sie im Jahresbogen mitzählen.</p>
+        <summary>Welche Turniere finde ich in der App?</summary>
+        <p class="ans">Im Grunde alle. Die meisten holen ihren Spielplan automatisch und aktualisieren sich von selbst — Ergebnisse erscheinen dort live. Für die Herren-Bundesliga gibt es eine eigene App, die direkt aus der Übersicht verlinkt ist. Und für alle übrigen Turniere gibt es eine Übersichtsseite, auf der die jeweiligen Spielpläne verlinkt werden. So ist alles an einer Stelle erreichbar.</p>
       </details>
       <details>
         <summary>Sind meine Daten sicher?</summary>
@@ -321,15 +338,15 @@
 <section class="cta-final">
   <div class="wrap">
     <h2>Bereit?</h2>
-    <p>Ein Link — für den ganzen Verein. Teil ihn mit deinem Team.</p>
+    <p>Ein Link für uns alle im VMW — einfach weitergeben.</p>
     <a class="btn btn-outline" data-app-link href="#">Zur App →</a>
   </div>
 </section>
 
 <footer class="site">
-  <div class="wrap inner">
-    <span>VMW Live-App · entwickelt für den Verein</span>
-    <span>Fragen? <a data-app-link href="#">Zur App</a></span>
+  <div class="wrap foot">
+    <p class="credit">Gebaut von Julius Brüning für die VMW Berlin · <a href="mailto:juliusbruening1994@gmail.com?subject=Feedback%20VMW%20Live-App">Feedback?</a></p>
+    <p class="legal">Inoffizielles Vereinsprojekt — kein Ersatz für die offizielle Turnier-Seite. <a href="https://vmw-berlin.de/impressum/" target="_blank" rel="noopener">Impressum</a></p>
   </div>
 </footer>
 
@@ -337,7 +354,11 @@
   /* ═══ ANPASSEN: Adresse der App. Alle "Zur App"-Buttons verlinken hierhin. ═══ */
   const APP_URL = "https://vmw-berlin-tournaments.netlify.app";
   /* ═══════════════════════════════════════════════════════════════════════════ */
-  document.querySelectorAll('[data-app-link]').forEach(function(a){ a.href = APP_URL; });
+  document.querySelectorAll('[data-app-link]').forEach(function(a){
+    a.href = APP_URL;
+    a.target = "_blank";       // App in neuem Tab öffnen
+    a.rel = "noopener";
+  });
 </script>
 
 </body>
